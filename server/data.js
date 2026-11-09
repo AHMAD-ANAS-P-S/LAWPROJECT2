@@ -1,0 +1,535 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DATA_FILE = path.join(__dirname, 'store.json');
+
+const initialData = {
+  user: {
+    id: 'user_1',
+    name: 'AHMAD ANAS P S',
+    email: 'anas@tamilrawlibrary.com',
+    plan: 'Tamil + English Package',
+    planType: 'Yearly',
+    planStartDate: '07 Nov 2024',
+    validTill: '06 Nov 2027',
+    remainingDays: 672,
+    status: 'Active',
+    language: 'English',
+    notificationsCount: 1,
+    notifications: [
+      { id: 'notif_1', title: 'New Amendment Published', text: 'Amendment to Bharatiya Sakshya Adhiniyam, 2023 was published today in the official gazette.', time: '10 mins ago', read: false }
+    ]
+  },
+  invoices: [
+    { invoiceNo: 'TRL-INV-0045', plan: 'Yearly', amount: '₹ 4,999', date: '07 Nov 2026', status: 'Paid' },
+    { invoiceNo: 'TRL-INV-0038', plan: 'Yearly', amount: '₹ 4,999', date: '07 Nov 2025', status: 'Paid' },
+    { invoiceNo: 'TRL-INV-0031', plan: 'Yearly', amount: '₹ 4,999', date: '07 Nov 2024', status: 'Paid' }
+  ],
+  acts: [
+    {
+      id: 'act-1',
+      title: 'Indian Evidence Act, 1872',
+      jurisdiction: 'Central Act',
+      number: 'Act No. 1 of 1872',
+      year: 1872,
+      enactmentYear: 1872,
+      status: 'In Force',
+      type: 'Principal',
+      category: 'Civil Laws',
+      language: 'Tamil & English',
+      description: 'An Act to consolidate, define and amend the law of Evidence in India.',
+      sectionsCount: 167,
+      sections: [
+        { section: 'Section 3', title: 'Interpretation-clause', content: 'In this Act the following words and expressions are used in the following senses, unless a contrary intention appears from the context: "Court", "Fact", "Relevant", "Facts in issue", "Document", "Evidence", "Proved", "Disproved", "Not proved", "India".' },
+        { section: 'Section 65B', title: 'Admissibility of electronic records', content: 'Notwithstanding anything contained in this Act, any information contained in an electronic record which is printed on a paper, stored, recorded or copied in optical or magnetic media produced by a computer shall be deemed to be also a document...' },
+        { section: 'Section 101', title: 'Burden of proof', content: 'Whoever desires any Court to give judgment as to any legal right or liability dependent on the existence of facts which he asserts, must prove that those facts exist.' },
+        { section: 'Section 114', title: 'Court may presume existence of certain facts', content: 'The Court may presume the existence of any fact which it thinks likely to have happened, regard being had to the common course of natural events, human conduct and public and private business.' }
+      ]
+    },
+    {
+      id: 'act-2',
+      title: 'Bharatiya Nyaya Sanhita, 2023',
+      jurisdiction: 'Central Act',
+      number: 'Act No. 45 of 2023',
+      year: 2023,
+      enactmentYear: 2023,
+      status: 'In Force',
+      type: 'Principal',
+      category: 'Criminal Laws',
+      language: 'Tamil & English',
+      description: 'An Act to consolidate and amend the provisions relating to offences and for matters connected therewith or incidental thereto.',
+      sectionsCount: 358,
+      sections: [
+        { section: 'Section 103', title: 'Murder', content: 'Whoever commits murder shall be punished with death or imprisonment for life, and shall also be liable to fine.' },
+        { section: 'Section 111', title: 'Organised crime', content: 'Any continuing unlawful activity including kidnapping, robbery, cyber-crimes having severe consequences, committed by any person as a member of an organised crime syndicate.' }
+      ]
+    },
+    {
+      id: 'act-3',
+      title: 'Bharatiya Nagarik Suraksha Sanhita, 2023',
+      jurisdiction: 'Central Act',
+      number: 'Act No. 46 of 2023',
+      year: 2023,
+      enactmentYear: 2023,
+      status: 'In Force',
+      type: 'Principal',
+      category: 'Criminal Laws',
+      language: 'Tamil & English',
+      description: 'An Act to consolidate and amend the law relating to Criminal Procedure.',
+      sectionsCount: 531,
+      sections: [
+        { section: 'Section 41', title: 'Arrest without Warrant', content: 'Any police officer may without an order from a Magistrate and without a warrant, arrest any person who commits, in the presence of a police officer, a cognizable offence.' },
+        { section: 'Section 173', title: 'Information in cognizable cases', content: 'Every information relating to the commission of a cognizable offence, if given orally to an officer in charge of a police station, shall be reduced to writing.' }
+      ]
+    },
+    {
+      id: 'act-4',
+      title: 'Indian Evidence Rules, 1972',
+      jurisdiction: 'Central Rules',
+      number: 'Rule No. 1 of 1972',
+      year: 1972,
+      enactmentYear: 1972,
+      status: 'In Force',
+      type: 'Rules',
+      category: 'Civil Laws',
+      language: 'Tamil & English',
+      notifiedDate: '01 Sep 1972',
+      description: 'Rules framed under the provisions of the Indian Evidence Act, 1872 for regulatory compliance and evidence submission.',
+      sectionsCount: 42,
+      sections: [
+        { section: 'Rule 4', title: 'Verification of Affidavits', content: 'Rules governing proper declaration and affirmation before the Commissioner of Oaths.' }
+      ]
+    },
+    {
+      id: 'act-5',
+      title: 'Amendment to Indian Evidence Act, 1872 (2023)',
+      jurisdiction: 'Central Act',
+      number: 'G.S.R. 2547(E)',
+      year: 2023,
+      enactmentYear: 2023,
+      status: 'In Force',
+      type: 'Amending',
+      category: 'Civil Laws',
+      language: 'Tamil & English',
+      description: 'Amendments clarifying digital signature certificates and electronic communication logs.',
+      sectionsCount: 8,
+      sections: [
+        { section: 'Section 2', title: 'Amendment of Section 65B', content: 'Substitution of sub-section (4) to streamline certificate presentation in judicial courts.' }
+      ]
+    },
+    {
+      id: 'act-6',
+      title: 'Notification under Indian Evidence Act, 1872',
+      jurisdiction: 'Central Act',
+      number: 'S.O. 1968(E)',
+      year: 2024,
+      enactmentYear: 2024,
+      status: 'In Force',
+      type: 'Notification',
+      category: 'Civil Laws',
+      language: 'Tamil & English',
+      notifiedDate: '12 Aug 2024',
+      description: 'Gazette notification authorizing designated digital certifiers for evidentiary validation.',
+      sectionsCount: 3,
+      sections: []
+    },
+    {
+      id: 'act-7',
+      title: 'Code of Criminal Procedure Act, 1973',
+      jurisdiction: 'Central Act',
+      number: 'Act No. 2 of 1973',
+      year: 1973,
+      enactmentYear: 1973,
+      status: 'In Force',
+      type: 'Principal',
+      category: 'Criminal Laws',
+      language: 'Tamil & English',
+      description: 'An Act to consolidate and amend the law relating to Criminal Procedure.',
+      sectionsCount: 484,
+      sections: []
+    },
+    {
+      id: 'act-8',
+      title: 'Tamil Nadu Land Reforms (Fixation of Ceiling on Land) Act, 1961',
+      jurisdiction: 'State Act',
+      number: 'Act No. 58 of 1961',
+      year: 1961,
+      enactmentYear: 1961,
+      status: 'In Force',
+      type: 'Principal',
+      category: 'Civil Laws',
+      language: 'Tamil & English',
+      description: 'An Act to provide for the fixation of ceiling on agricultural land holding and acquisition of surplus land in Tamil Nadu.',
+      sectionsCount: 112,
+      sections: []
+    },
+    {
+      id: 'act-9',
+      title: 'Repealing and Amending Act, 2023',
+      jurisdiction: 'Central Act',
+      number: 'Act No. 12 of 2023',
+      year: 2023,
+      enactmentYear: 2023,
+      status: 'In Force',
+      type: 'Repealing',
+      category: 'Constitution',
+      language: 'Tamil & English',
+      description: 'An Act to repeal certain enactments and to amend certain other enactments.',
+      sectionsCount: 4,
+      sections: []
+    },
+    {
+      id: 'act-10',
+      title: 'Tamil Nadu Prohibition Act, 1937',
+      jurisdiction: 'State Act',
+      number: 'Act No. 10 of 1937',
+      year: 1937,
+      enactmentYear: 1937,
+      status: 'In Force',
+      type: 'Principal',
+      category: 'Criminal Laws',
+      language: 'Tamil & English',
+      description: 'An Act to introduce and extend the prohibition of manufacture, sale and consumption of intoxicating liquors in Tamil Nadu.',
+      sectionsCount: 56,
+      sections: []
+    }
+  ],
+  rules: [
+    {
+      id: 'rule-1',
+      title: 'Bharatiya Nyaya Sanhita (Procedure) Rules, 2024',
+      jurisdiction: 'Central Rules',
+      number: 'Rule No. 45 of 2024',
+      notifiedDate: '15 Jul 2024',
+      year: 2024,
+      category: 'Criminal',
+      sectionsCount: 24,
+      description: 'Procedural guidelines for forensic recording, audio-video statements, and charge filing under BNS 2023.'
+    },
+    {
+      id: 'rule-2',
+      title: 'Bharatiya Nagarik Suraksha Sanhita Rules, 2024',
+      jurisdiction: 'Central Rules',
+      number: 'Rule No. 46 of 2024',
+      notifiedDate: '15 Jul 2024',
+      year: 2024,
+      category: 'Criminal',
+      sectionsCount: 38,
+      description: 'Regulations concerning electronic summons service, police custody timelines, and bail processing under BNSS 2023.'
+    },
+    {
+      id: 'rule-3',
+      title: 'Indian Evidence Rules, 1972',
+      jurisdiction: 'Central Rules',
+      number: 'Rule No. 1 of 1972',
+      notifiedDate: '01 Sep 1972',
+      year: 1972,
+      category: 'Civil',
+      sectionsCount: 42,
+      description: 'Prescribed formats for documentary exhibits, certified copies, and expert witness registers.'
+    },
+    {
+      id: 'rule-4',
+      title: 'Code of Criminal Procedure Rules, 1973',
+      jurisdiction: 'Central Rules',
+      number: 'Rule No. 2 of 1973',
+      notifiedDate: '01 Apr 1973',
+      year: 1973,
+      category: 'Criminal',
+      sectionsCount: 56,
+      description: 'Standard judicial procedure forms, diary registers, and summons protocols across trial courts.'
+    },
+    {
+      id: 'rule-5',
+      title: 'Tamil Nadu Court Fees and Suits Valuation Rules, 1955',
+      jurisdiction: 'State Rules',
+      number: 'Rule No. 12 of 1955',
+      notifiedDate: '14 Oct 1955',
+      year: 1955,
+      category: 'Civil',
+      sectionsCount: 30,
+      description: 'State valuation calculation parameters for plaints, appeals, and petitions before Madras High Court.'
+    },
+    {
+      id: 'rule-6',
+      title: 'Tamil Nadu Motor Vehicles Rules, 1989',
+      jurisdiction: 'State Rules',
+      number: 'Rule No. 23 of 1989',
+      notifiedDate: '01 Jul 1989',
+      year: 1989,
+      category: 'Transport',
+      sectionsCount: 120,
+      description: 'Driver licensing, permits, vehicular fitness testing, and traffic tribunals in Tamil Nadu.'
+    }
+  ],
+  amendments: [
+    {
+      id: 'amen-1',
+      title: 'Amendment to Indian Evidence Act, 1872 (2023)',
+      type: 'Amendment',
+      reference: 'Central Act',
+      notificationNo: 'G.S.R. 2547(E)',
+      date: '15 Jul 2023',
+      year: 2023,
+      jurisdiction: 'Central',
+      description: 'Statutory updates for electronic evidence certification and admissibility standards.'
+    },
+    {
+      id: 'amen-2',
+      title: 'Notification under Indian Evidence Act, 1872',
+      type: 'Notification',
+      reference: 'Central Act',
+      notificationNo: 'S.O. 1968(E)',
+      date: '12 Aug 2024',
+      year: 2024,
+      jurisdiction: 'Central',
+      description: 'Official Ministry of Law notification notifying certifying agencies for electronic certificates.'
+    },
+    {
+      id: 'amen-3',
+      title: 'Correction in Code of Criminal Procedure, 1973',
+      type: 'Correction',
+      reference: 'Central Act',
+      notificationNo: 'S.O. 2214(E)',
+      date: '08 Jul 2024',
+      year: 2024,
+      jurisdiction: 'Central',
+      description: 'Corrigendum fixing typographical references in cross-referenced penal schedule.'
+    },
+    {
+      id: 'amen-4',
+      title: 'New Insertion to Indian Evidence Rules, 1972',
+      type: 'New Insertion',
+      reference: 'Central Rules',
+      notificationNo: 'G.S.R. 178(E)',
+      date: '05 Jun 2024',
+      year: 2024,
+      jurisdiction: 'Central',
+      description: 'Insertion of Rule 14A prescribing digital forensics custody checklist.'
+    },
+    {
+      id: 'amen-5',
+      title: 'Repeal of Certain Provisions – CrPC, 1973',
+      type: 'Repeal',
+      reference: 'Central Act',
+      notificationNo: 'S.O. 1420(E)',
+      date: '20 May 2024',
+      year: 2024,
+      jurisdiction: 'Central',
+      description: 'Repeal of superseded preliminary inquiry protocols following rollout of BNSS.'
+    },
+    {
+      id: 'amen-6',
+      title: 'Tamil Nadu Land Reforms Notification',
+      type: 'Notification',
+      reference: 'State Act',
+      notificationNo: 'G.O. Ms. No. 142',
+      date: '10 Apr 2024',
+      year: 2024,
+      jurisdiction: 'State',
+      description: 'Notification on urban ceiling exemption criteria in Chennai and Madurai districts.'
+    }
+  ],
+  notes: [
+    {
+      id: 'note-1',
+      title: 'Section 65B – Electronic Records (Notes)',
+      actOrRule: 'Indian Evidence Act, 1872',
+      section: 'Section 65B',
+      updatedDate: '15 Jul 2024',
+      year: 2024,
+      type: 'Section Notes',
+      tag: 'Evidence',
+      content: 'Important factors for 65B certificate:\n1. The device must be in regular lawful use during the period.\n2. The information was fed into the computer in ordinary course.\n3. The computer was operating properly.\n4. Arjun Panditrao Khotkar holds that oral evidence cannot substitute a written certificate.'
+    },
+    {
+      id: 'note-2',
+      title: 'Amendment to Evidence Act, 1872 (2023)',
+      actOrRule: 'Amendment',
+      section: 'G.S.R. 2547(E)',
+      updatedDate: '12 Jul 2024',
+      year: 2024,
+      type: 'Act Notes',
+      tag: 'Amendment',
+      content: 'Key amendments summarized: Harmonization with modern cloud storage, cryptographic hash integrity checks, and certified hash generators.'
+    },
+    {
+      id: 'note-3',
+      title: 'Digital Evidence – Key Points',
+      actOrRule: 'Indian Evidence Act, 1872',
+      section: 'Insight Note',
+      updatedDate: '10 Jul 2024',
+      year: 2024,
+      type: 'Case Notes',
+      tag: 'Important',
+      content: 'Maintain strict hash-matching reports from seizure to court presentation. Any mismatch in MD5 or SHA-256 makes it inadmissible.'
+    },
+    {
+      id: 'note-4',
+      title: 'Chain of Custody – Case Pointers',
+      actOrRule: 'Case Note',
+      section: 'Evidence',
+      updatedDate: '08 Jul 2024',
+      year: 2024,
+      type: 'Case Notes',
+      tag: 'Case Note',
+      content: 'Landmark rulings on seizure memo timestamps and independent witnesses for hardware cloning in cyber forensics.'
+    },
+    {
+      id: 'note-5',
+      title: 'Relevant Notifications – Evidence Act',
+      actOrRule: 'Notification',
+      section: 'S.O. 1968(E)',
+      updatedDate: '05 Jul 2024',
+      year: 2024,
+      type: 'Rule Notes',
+      tag: 'Notification',
+      content: 'List of authorized state and central cyber examiners under Section 79A of IT Act read with Evidence provisions.'
+    }
+  ],
+  bookmarks: [
+    {
+      id: 'bm-1',
+      title: 'Indian Evidence Act, 1872',
+      type: 'Act',
+      jurisdiction: 'Central Act',
+      number: 'Act No. 1 of 1872',
+      bookmarkedDate: '15 Jul 2024',
+      year: 2024,
+      important: true,
+      tag: 'Evidence'
+    },
+    {
+      id: 'bm-2',
+      title: 'Indian Evidence Rules, 1972',
+      type: 'Rule',
+      jurisdiction: 'Central Rules',
+      number: 'Rule No. 1 of 1972',
+      bookmarkedDate: '12 Jul 2024',
+      year: 2024,
+      important: false,
+      tag: 'Procedure'
+    },
+    {
+      id: 'bm-3',
+      title: 'Section 65B – Electronic Records',
+      type: 'Section',
+      jurisdiction: 'Indian Evidence Act, 1872',
+      number: 'Section 65B',
+      bookmarkedDate: '10 Jul 2024',
+      year: 2024,
+      important: true,
+      tag: 'IT & Digital'
+    },
+    {
+      id: 'bm-4',
+      title: 'Amendment to Indian Evidence Act, 1872 (2023)',
+      type: 'Amendment',
+      jurisdiction: 'Amendment',
+      number: 'G.S.R. 2547(E)',
+      bookmarkedDate: '08 Jul 2024',
+      year: 2024,
+      important: false,
+      tag: 'Amendment'
+    },
+    {
+      id: 'bm-5',
+      title: 'Notification under Indian Evidence Act, 1872',
+      type: 'Notification',
+      jurisdiction: 'Notification',
+      number: 'S.O. 1968(E)',
+      bookmarkedDate: '05 Jul 2024',
+      year: 2024,
+      important: false,
+      tag: 'Notification'
+    },
+    {
+      id: 'bm-6',
+      title: 'Bharatiya Nyaya Sanhita, 2023',
+      type: 'Act',
+      jurisdiction: 'Central Act',
+      number: 'Act No. 45 of 2023',
+      bookmarkedDate: '01 Jul 2024',
+      year: 2024,
+      important: true,
+      tag: 'Criminal Law'
+    }
+  ],
+  helpTutorials: [
+    {
+      id: 'vid-1',
+      title: 'Platform Overview',
+      duration: '05:20',
+      thumbnail: '/assets/video_thumb_1.png',
+      description: 'A comprehensive walkthrough of Tamil Raw Library, covering navigation, search capabilities, and subscription features.'
+    },
+    {
+      id: 'vid-2',
+      title: 'How to Search Acts & Rules',
+      duration: '04:35',
+      thumbnail: '/assets/video_thumb_2.png',
+      description: 'Learn how to use universal search, exact phrase matching, cross-reference filters, and section-by-section exploration.'
+    },
+    {
+      id: 'vid-3',
+      title: 'Create Notes & Bookmarks',
+      duration: '03:50',
+      thumbnail: '/assets/video_thumb_3.png',
+      description: 'Organize your legal research by tagging notes, marking important sections, and exporting research briefs.'
+    }
+  ],
+  faqs: [
+    {
+      id: 'faq-1',
+      question: 'How do I search for a specific Act or Rule?',
+      answer: 'Use the top universal search bar on the Dashboard or browse the dedicated Acts and Rules pages. You can search by Act title, year, section number, or keywords. For more advanced criteria, click the "Advanced Search" button.'
+    },
+    {
+      id: 'faq-2',
+      question: 'How can I access the latest Amendments?',
+      answer: 'Navigate to the "Amendments & Updates" section from the sidebar. Here, all legal amendments, government notifications, corrigenda, and newly inserted sections are updated in real time with gazette citations.'
+    },
+    {
+      id: 'faq-3',
+      question: 'Can I save my notes and bookmarks?',
+      answer: 'Yes! While viewing any Act, Rule, or Section, click the bookmark icon to save it to your Bookmarks dashboard. You can also write structured personal legal notes, attach tags, import PDF notes, and export notes as PDF.'
+    },
+    {
+      id: 'faq-4',
+      question: 'How do I manage my subscription?',
+      answer: 'Visit the "Subscription Details" page from the sidebar. You can review your active plan, valid until date, remaining days, download GST tax invoices, update billing details, renew your plan, or manage your package tier.'
+    }
+  ],
+  stepGuides: [
+    { id: 'step-1', step: 1, title: 'Create Your Account', desc: 'Sign up with your full name, email, and password or use one-click Google OAuth authentication to initialize your legal workspace.' },
+    { id: 'step-2', step: 2, title: 'Choose a Subscription Plan', desc: 'Select the Tamil + English Package or bilingual tier with annual or multi-year validity for unrestricted access.' },
+    { id: 'step-3', step: 3, title: 'Browse Acts, Rules & Updates', desc: 'Explore central and state statutes with side-by-side section viewing, official notifications, and verified citations.' },
+    { id: 'step-4', step: 4, title: 'Use Search & Filters Effectively', desc: 'Refine your legal inquiries with jurisdiction filters, enactment years, exact phrases, and cross-references.' },
+    { id: 'step-5', step: 5, title: 'Save Notes & Bookmarks', desc: 'Pin critical statutory provisions, take personal legal case notes, organize them with custom tags, and export them as PDF.' }
+  ]
+};
+
+export function loadData() {
+  try {
+    if (!fs.existsSync(DATA_FILE)) {
+      fs.writeFileSync(DATA_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+      return initialData;
+    }
+    const raw = fs.readFileSync(DATA_FILE, 'utf-8');
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error('Error loading data, using fallback:', err);
+    return initialData;
+  }
+}
+
+export function saveData(data) {
+  try {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('Error saving data:', err);
+  }
+}
