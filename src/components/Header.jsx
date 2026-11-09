@@ -23,6 +23,16 @@ export default function Header() {
 
   return (
     <header className="h-[64px] md:h-[70px] bg-white border-b border-[#ebdcf7] px-3 md:px-6 flex items-center justify-between sticky top-0 z-40 select-none shadow-[0_2px_10px_rgba(110,10,140,0.03)]">
+      {/* Click backdrop to close dropdowns on outside click */}
+      {(showNotifications || showUserDropdown) && (
+        <div
+          className="fixed inset-0 z-40 bg-transparent"
+          onClick={() => {
+            setShowNotifications(false);
+            setShowUserDropdown(false);
+          }}
+        />
+      )}
       {/* Left branding & mobile hamburger */}
       <div className="flex items-center space-x-2 md:space-x-3">
         {/* Mobile menu toggle button */}

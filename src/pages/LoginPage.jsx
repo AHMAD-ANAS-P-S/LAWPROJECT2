@@ -48,203 +48,181 @@ export default function LoginPage() {
     <div className="min-h-screen w-full bg-gradient-to-r from-[#1c032a] via-[#3d0f5c] to-[#1c032a] flex flex-col justify-center items-center overflow-x-hidden selection:bg-purple-200">
       {/* ============================================================== */}
       {/* 1. DESKTOP & LAPTOP & PC VIEW (>= 1024px)                      */}
-      {/* Exact pixel-matched full stage with proportional interactive   */}
-      {/* overlay, centered against royal purple velvet background       */}
+      {/* Clean 2-column layout: Left Hero Artwork + Pure HTML Card      */}
+      {/* ZERO ghost text, ZERO double buttons, 100% crisp & aligned     */}
       {/* ============================================================== */}
-      <div className="hidden lg:flex w-full min-h-screen flex-col items-center justify-center p-2 xl:p-4">
-        <div className="w-full max-w-[1671px] aspect-[1671/941] relative select-none shadow-[0_20px_70px_rgba(0,0,0,0.55)] rounded-2xl overflow-hidden bg-white">
-          {/* Complete authoritative reference design artwork */}
-          <img
-            src="/assets/login_portal_full.png"
-            alt="Tamil Raw Library Login Portal"
-            className="w-full h-full object-cover pointer-events-none select-none"
-          />
+      <div className="hidden lg:flex w-full min-h-screen flex-col items-center justify-center p-4 xl:p-8">
+        <div className="w-full max-w-[1580px] bg-white rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.55)] border border-[#ebd6fa] overflow-hidden flex flex-row items-stretch min-h-[850px] relative">
+          {/* Left Hero Section: Supreme Court, Books, Gavel, Scales, Laurels & 4 Features */}
+          <div className="w-[60%] relative flex items-stretch bg-[#330c4f] overflow-hidden">
+            <img
+              src="/assets/login_hero_clean.png"
+              alt="Tamil Raw Library Legal Platform"
+              className="w-full h-full object-cover object-left select-none pointer-events-none"
+            />
 
-          {/* Interactive HTML Form Layer positioned over card */}
-          <form onSubmit={handleSubmit}>
-            {/* Email Input Field */}
+            {/* Clickable interactive feature badges at bottom left */}
             <div
-              style={{
-                position: 'absolute',
-                left: '66.72%',
-                top: '37.83%',
-                width: '26.63%',
-                height: '5.53%',
-              }}
-              className="z-20 flex items-center"
-            >
-              <div className="relative w-full h-full flex items-center">
-                <Mail className="absolute left-3.5 w-5 h-5 text-[#6c0f8e] pointer-events-none" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  className="w-full h-full bg-[#faf5fe] hover:bg-white focus:bg-white rounded-2xl border-2 border-[#dfc3f4] focus:border-[#7d14a9] text-[#330448] font-medium pl-11 pr-4 text-[13px] md:text-sm outline-none transition-all shadow-inner"
-                  required
-                />
+              onClick={() => setActivePage('acts')}
+              style={{ position: 'absolute', left: '5.2%', bottom: '2.5%', width: '11%', height: '15%' }}
+              className="cursor-pointer hover:bg-white/10 rounded-xl transition-colors"
+              title="Browse Acts"
+            />
+            <div
+              onClick={() => setActivePage('amendments')}
+              style={{ position: 'absolute', left: '17.2%', bottom: '2.5%', width: '12%', height: '15%' }}
+              className="cursor-pointer hover:bg-white/10 rounded-xl transition-colors"
+              title="Latest Updates"
+            />
+            <div
+              onClick={() => setActivePage('notes')}
+              style={{ position: 'absolute', left: '30.5%', bottom: '2.5%', width: '13%', height: '15%' }}
+              className="cursor-pointer hover:bg-white/10 rounded-xl transition-colors"
+              title="Notes & Bookmarks"
+            />
+            <div
+              onClick={() => setActivePage('search')}
+              style={{ position: 'absolute', left: '44.5%', bottom: '2.5%', width: '13%', height: '15%' }}
+              className="cursor-pointer hover:bg-white/10 rounded-xl transition-colors"
+              title="Advanced Search"
+            />
+          </div>
+
+          {/* Right Section: Purple/Lavender atmosphere + Pristine White Card */}
+          <div className="w-[40%] flex flex-col items-center justify-center p-8 xl:p-12 relative overflow-hidden bg-gradient-to-br from-[#f8f1fc] via-[#ebdcf7] to-[#e4ccf5]">
+            {/* Ambient golden and violet glows */}
+            <div className="absolute top-0 right-0 w-72 h-36 bg-gradient-to-bl from-purple-800/30 to-transparent pointer-events-none rounded-bl-full" />
+            <div className="absolute bottom-0 right-0 w-80 h-44 bg-gradient-to-tl from-purple-900/30 via-purple-700/20 to-transparent pointer-events-none rounded-tl-full" />
+
+            {/* Crisp, properly aligned Login Card */}
+            <div className="w-full max-w-[430px] bg-white rounded-3xl p-7 xl:p-8 border-2 border-[#f0c868] shadow-[0_12px_45px_rgba(110,15,160,0.15)] relative z-10 text-gray-800">
+              {/* Golden Scales Emblem */}
+              <div className="flex justify-center -mt-2 mb-3">
+                <div className="w-20 h-20 rounded-full border border-[#f5cb5f] p-0.5 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/assets/gold_scales_emblem.png"
+                    alt="Emblem"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Password Input Field */}
-            <div
-              style={{
-                position: 'absolute',
-                left: '66.72%',
-                top: '50.15%',
-                width: '26.63%',
-                height: '5.53%',
-              }}
-              className="z-20 flex items-center"
-            >
-              <div className="relative w-full h-full flex items-center">
-                <Lock className="absolute left-3.5 w-5 h-5 text-[#6c0f8e] pointer-events-none" />
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                  className="w-full h-full bg-[#faf5fe] hover:bg-white focus:bg-white rounded-2xl border-2 border-[#dfc3f4] focus:border-[#7d14a9] text-[#330448] font-medium pl-11 pr-11 text-[13px] md:text-sm outline-none transition-all shadow-inner"
-                  required
-                />
+              {/* Title & Subtitle */}
+              <div className="text-center mb-5">
+                <h2 className="text-2xl xl:text-3xl font-serif-law font-bold text-[#380352]">
+                  Welcome Back
+                </h2>
+                <p className="text-xs text-gray-600 mt-1 font-medium">
+                  Login to Access Tamil Raw Library
+                </p>
+                <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-[#f5cb5f] to-transparent mx-auto mt-2.5" />
+              </div>
+
+              {/* Error message */}
+              {error && (
+                <div className="mb-4 p-2.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs font-semibold text-center">
+                  {error}
+                </div>
+              )}
+
+              {/* Interactive Form */}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-[#45055e] mb-1.5 flex items-center">
+                    <Mail className="w-3.5 h-3.5 mr-1.5 text-[#79159d]" />
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email address"
+                    className="w-full px-4 py-2.5 rounded-xl border-2 border-[#dfc3f4] bg-[#fbf7fe] focus:bg-white focus:border-[#7a0ea6] text-xs font-medium outline-none transition-colors"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#45055e] mb-1.5 flex items-center">
+                    <Lock className="w-3.5 h-3.5 mr-1.5 text-[#79159d]" />
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                      className="w-full px-4 py-2.5 rounded-xl border-2 border-[#dfc3f4] bg-[#fbf7fe] focus:bg-white focus:border-[#7a0ea6] text-xs font-medium outline-none pr-10 transition-colors"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-2.5 text-gray-500 hover:text-purple-900"
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex justify-end pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setForgotEmail(email);
+                      setForgotModalOpen(true);
+                    }}
+                    className="text-xs font-bold text-[#6a0793] hover:underline"
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3 rounded-full bg-gradient-to-r from-[#4d036a] via-[#6f0c97] to-[#7f13ad] hover:from-[#5d047f] hover:to-[#9218c5] text-white text-sm font-bold flex items-center justify-center space-x-2 shadow-[0_4px_16px_rgba(110,15,160,0.3)] active:scale-95 transition-all"
+                >
+                  <ArrowRight className="w-4 h-4" />
+                  <span>{loading ? 'Logging in...' : 'Login'}</span>
+                </button>
+
+                <div className="flex items-center my-3">
+                  <div className="flex-1 border-t border-gray-200" />
+                  <span className="px-3 text-[11px] font-bold text-gray-400">OR</span>
+                  <div className="flex-1 border-t border-gray-200" />
+                </div>
+
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 text-[#721596] hover:text-[#410359] transition-colors cursor-pointer"
-                  title={showPassword ? 'Hide password' : 'Show password'}
+                  onClick={googleAuth}
+                  className="w-full py-2.5 rounded-full border-2 border-[#dfc6f3] bg-white hover:bg-gray-50 text-gray-700 text-xs font-bold flex items-center justify-center space-x-2 shadow-xs transition-colors"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  <svg className="w-4 h-4" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.04h3.88c2.28-2.09 3.66-5.18 3.66-9.14z" />
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.04c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.13C3.27 21.43 7.34 24 12 24z" />
+                    <path fill="#FBBC05" d="M5.28 14.28c-.25-.72-.38-1.49-.38-2.28s.13-1.56.38-2.28V6.59H1.25C.45 8.19 0 9.99 0 12s.45 3.81 1.25 5.41l4.03-3.13z" />
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.27 2.57 1.25 6.59l4.03 3.13c.95-2.83 3.6-4.93 6.72-4.93z" />
+                  </svg>
+                  <span>Login with Google</span>
                 </button>
+              </form>
+
+              <div className="text-center mt-5 pt-3 border-t border-[#f4e4fb]">
+                <p className="text-xs text-gray-600">
+                  New to Tamil Raw Library?{' '}
+                  <button
+                    type="button"
+                    onClick={() => setActivePage('signup')}
+                    className="font-bold text-[#6a0793] hover:underline"
+                  >
+                    Sign Up
+                  </button>
+                </p>
               </div>
             </div>
-
-            {/* Forgot Password Link */}
-            <button
-              type="button"
-              onClick={() => {
-                setForgotEmail(email);
-                setForgotModalOpen(true);
-              }}
-              style={{
-                position: 'absolute',
-                left: '83.0%',
-                top: '59.08%',
-                width: '10.5%',
-                height: '3.0%',
-              }}
-              className="z-20 flex items-center justify-end text-xs font-bold text-[#550573] hover:text-[#8817b7] cursor-pointer transition-colors"
-            >
-              <span>Forgot Password?</span>
-            </button>
-
-            {/* Error Message if any */}
-            {error && (
-              <div
-                style={{
-                  position: 'absolute',
-                  left: '66.72%',
-                  top: '57.0%',
-                  width: '16%',
-                }}
-                className="z-20 text-[11px] font-bold text-red-600 truncate"
-              >
-                {error}
-              </div>
-            )}
-
-            {/* Login Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                position: 'absolute',
-                left: '66.72%',
-                top: '64.82%',
-                width: '26.63%',
-                height: '6.16%',
-              }}
-              className="z-20 rounded-full bg-gradient-to-r from-[#4d036a] via-[#6f0c97] to-[#7f13ad] hover:from-[#5d047f] hover:to-[#9218c5] text-white text-base font-bold flex items-center justify-center space-x-2 shadow-[0_4px_16px_rgba(110,15,160,0.35)] cursor-pointer active:scale-[0.98] transition-all"
-            >
-              <ArrowRight className="w-5 h-5 text-white/90" />
-              <span>{loading ? 'Logging in...' : 'Login'}</span>
-            </button>
-          </form>
-
-          {/* Google Login Button */}
-          <button
-            type="button"
-            onClick={googleAuth}
-            style={{
-              position: 'absolute',
-              left: '66.72%',
-              top: '79.06%',
-              width: '26.63%',
-              height: '6.16%',
-            }}
-            className="z-20 rounded-full bg-white hover:bg-[#fbf7fe] border-2 border-[#dfc6f3] text-[#3d0356] text-sm font-bold flex items-center justify-center space-x-2.5 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
-              <path
-                fill="#4285F4"
-                d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.04h3.88c2.28-2.09 3.66-5.18 3.66-9.14z"
-              />
-              <path
-                fill="#34A853"
-                d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.04c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.13C3.27 21.43 7.34 24 12 24z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M5.28 14.28c-.25-.72-.38-1.49-.38-2.28s.13-1.56.38-2.28V6.59H1.25C.45 8.19 0 9.99 0 12s.45 3.81 1.25 5.41l4.03-3.13z"
-              />
-              <path
-                fill="#EA4335"
-                d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.27 2.57 1.25 6.59l4.03 3.13c.95-2.83 3.6-4.93 6.72-4.93z"
-              />
-            </svg>
-            <span>Login with Google</span>
-          </button>
-
-          {/* Sign Up Link */}
-          <button
-            type="button"
-            onClick={() => setActivePage('signup')}
-            style={{
-              position: 'absolute',
-              left: '82.8%',
-              top: '90.11%',
-              width: '5.5%',
-              height: '3.5%',
-            }}
-            className="z-20 text-sm font-bold text-[#550573] hover:text-[#8817b7] underline cursor-pointer flex items-center justify-center transition-colors"
-          >
-            Sign Up
-          </button>
-
-          {/* Interactive clickable zones for bottom 4 feature cards */}
-          <div
-            onClick={() => setActivePage('acts')}
-            style={{ position: 'absolute', left: '3.2%', top: '82.8%', width: '6.8%', height: '14.8%' }}
-            className="z-20 cursor-pointer hover:bg-white/10 rounded-xl transition-colors"
-            title="Browse Central & State Acts"
-          />
-          <div
-            onClick={() => setActivePage('amendments')}
-            style={{ position: 'absolute', left: '10.4%', top: '82.8%', width: '7.4%', height: '14.8%' }}
-            className="z-20 cursor-pointer hover:bg-white/10 rounded-xl transition-colors"
-            title="Latest Amendments & Notifications"
-          />
-          <div
-            onClick={() => setActivePage('notes')}
-            style={{ position: 'absolute', left: '18.5%', top: '82.8%', width: '7.7%', height: '14.8%' }}
-            className="z-20 cursor-pointer hover:bg-white/10 rounded-xl transition-colors"
-            title="Notes & Bookmarks"
-          />
-          <div
-            onClick={() => setActivePage('search')}
-            style={{ position: 'absolute', left: '26.9%', top: '82.8%', width: '8.0%', height: '14.8%' }}
-            className="z-20 cursor-pointer hover:bg-white/10 rounded-xl transition-colors"
-            title="Advanced Search"
-          />
+          </div>
         </div>
       </div>
 
@@ -281,11 +259,11 @@ export default function LoginPage() {
           <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#e6b93d] shadow-2xl text-gray-800">
             {/* Scales Emblem */}
             <div className="flex justify-center -mt-2 mb-3">
-              <div className="w-16 h-16 rounded-full border border-[#f5cb5f] p-1 bg-gradient-to-b from-white to-purple-50 shadow-sm flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full border border-[#f5cb5f] p-0.5 bg-white shadow-sm flex items-center justify-center overflow-hidden">
                 <img
                   src="/assets/gold_scales_emblem.png"
                   alt="Emblem"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover rounded-full"
                 />
               </div>
             </div>
@@ -362,7 +340,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#4d036a] to-[#7f13ad] hover:from-[#5d047f] hover:to-[#9218c5] text-white text-xs font-bold flex items-center justify-center space-x-1.5 shadow-md active:scale-95 transition-all"
+                className="w-full py-3 rounded-full bg-gradient-to-r from-[#4d036a] to-[#7f13ad] hover:from-[#5d047f] hover:to-[#9218c5] text-white text-xs font-bold flex items-center justify-center space-x-1.5 shadow-md active:scale-95 transition-all"
               >
                 <span>{loading ? 'Logging in...' : 'Login'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -377,7 +355,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={googleAuth}
-                className="w-full py-2.5 rounded-xl border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-bold flex items-center justify-center space-x-2 transition-colors"
+                className="w-full py-2.5 rounded-full border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-bold flex items-center justify-center space-x-2 transition-colors"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.04h3.88c2.28-2.09 3.66-5.18 3.66-9.14z" />

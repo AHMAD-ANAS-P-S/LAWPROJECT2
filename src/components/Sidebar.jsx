@@ -46,7 +46,7 @@ export default function Sidebar() {
 
   const renderNavContent = () => (
     <>
-      <div className="py-4 px-3 space-y-1.5 z-10">
+      <div className="py-1.5 xl:py-2.5 px-2.5 xl:px-3 space-y-0.5 xl:space-y-1 z-10 shrink-0">
         {menuItems.map(item => {
           const Icon = item.icon;
           const isActive = activePage === item.id;
@@ -56,9 +56,9 @@ export default function Sidebar() {
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item)}
-                className="w-full flex items-center space-x-3.5 px-4 py-2.5 rounded-xl text-white/90 hover:text-white hover:bg-white/10 transition-all font-medium text-[13.5px] mt-2 group"
+                className="w-full flex items-center space-x-2.5 xl:space-x-3 px-3 xl:px-3.5 py-1 xl:py-1.5 rounded-xl text-white/90 hover:text-white hover:bg-white/10 transition-all font-medium text-[12.5px] xl:text-[13px] mt-0.5 group"
               >
-                <Icon className="w-4 h-4 text-white/80 group-hover:text-white" />
+                <Icon className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-white/80 group-hover:text-white" />
                 <span>{item.label}</span>
               </button>
             );
@@ -68,14 +68,14 @@ export default function Sidebar() {
             <button
               key={item.id}
               onClick={() => handleNavClick(item)}
-              className={`w-full flex items-center space-x-3.5 px-4 py-2.5 rounded-xl text-[13.5px] transition-all font-medium relative ${
+              className={`w-full flex items-center space-x-2.5 xl:space-x-3 px-3 xl:px-3.5 py-1 xl:py-1.5 rounded-xl text-[12.5px] xl:text-[13px] transition-all font-medium relative ${
                 isActive
                   ? 'gold-gradient-bg text-[#2d0f39] font-bold shadow-[0_2px_12px_rgba(248,223,128,0.35)]'
                   : 'text-white/90 hover:text-white hover:bg-white/10'
               }`}
             >
               <Icon
-                className={`w-4 h-4 ${
+                className={`w-3.5 h-3.5 xl:w-4 xl:h-4 ${
                   isActive ? 'text-[#391048] fill-[#e6b93d]' : 'text-white/80'
                 }`}
               />
@@ -85,32 +85,32 @@ export default function Sidebar() {
         })}
       </div>
 
-      {/* Decorative Legal Illustration at the bottom */}
-      <div className="w-full mt-auto relative z-10 flex flex-col items-center justify-end pointer-events-none">
+      {/* Decorative Legal Illustration at the bottom - Guaranteed 100% visible on any laptop or monitor height */}
+      <div className="w-full mt-auto relative z-10 flex flex-col items-center justify-end pointer-events-none px-2 pb-1.5 min-h-0 shrink">
         {isLadyJusticePage ? (
           <img
             src="/assets/sidebar_lady_justice.png"
             alt="Lady Justice"
-            className="w-full object-contain object-bottom -mb-1 filter drop-shadow-md"
+            className="max-h-[135px] lg:max-h-[155px] xl:max-h-[195px] w-auto max-w-[220px] object-contain object-bottom filter drop-shadow-md transition-all"
           />
         ) : (
           <img
             src="/assets/sidebar_books_gavel.png"
             alt="Acts, Rules, Amendments Legal Books and Gavel"
-            className="w-full object-contain object-bottom -mb-1 filter drop-shadow-md"
+            className="max-h-[135px] lg:max-h-[155px] xl:max-h-[195px] w-auto max-w-[220px] object-contain object-bottom filter drop-shadow-md transition-all"
           />
         )}
       </div>
 
       {/* Subtle background glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-purple-950/60 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-purple-950/60 to-transparent pointer-events-none" />
     </>
   );
 
   return (
     <>
       {/* 1. Desktop & Laptop Fixed Sticky Sidebar */}
-      <aside className="hidden md:flex w-[260px] min-w-[260px] sidebar-gradient-bg sticky top-[70px] h-[calc(100vh-70px)] flex-col justify-between select-none shadow-xl border-r border-[#690d8e] overflow-hidden z-20">
+      <aside className="hidden md:flex w-[260px] min-w-[260px] sidebar-gradient-bg sticky top-[64px] md:top-[70px] h-[calc(100vh-64px)] md:h-[calc(100vh-70px)] flex-col justify-between select-none shadow-xl border-r border-[#690d8e] overflow-y-auto z-20">
         {renderNavContent()}
       </aside>
 
